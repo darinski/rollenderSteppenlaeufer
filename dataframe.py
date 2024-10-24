@@ -4,7 +4,7 @@
 import pandas as pd
 import numpy as np
 
-print("Crimes Dataset:")
+print("\n CRIMES DATASET:")
 crimes = pd.read_csv('rollenderSteppenlaeufer/resources/Crimes_Dataset_fixed.csv')
 crimesdf = pd.DataFrame(crimes)
 
@@ -21,7 +21,9 @@ print("\n Null Values:")
 print(crimesdf.isnull().sum())
 
 
-print("\nSuspects Dataset \n")
+
+
+print("\n SUSPECTS DATASET:")
 suspects = pd.read_csv('rollenderSteppenlaeufer/resources/Suspects_Dataset_fixed.csv')
 suspectsdf = pd.DataFrame(suspects)
 
