@@ -3,11 +3,11 @@
 import pandas as pd
 
 
-crimes = pd.read_csv('/Users/dariashevyrev/git/rollenderSteppenlaeufer/rollenderSteppenlaeufer/resources/Crimes_Dataset.csv')
+crimes = pd.read_csv('rollenderSteppenlaeufer/resources/Crimes_Dataset_fixed.csv')
 crimesdf = pd.DataFrame(crimes)
 print(crimesdf.head())
 
-suspects = pd.read_csv('/Users/dariashevyrev/git/rollenderSteppenlaeufer/rollenderSteppenlaeufer/resources/Suspects_Dataset.csv')
+suspects = pd.read_csv('rollenderSteppenlaeufer/resources/Suspects_Dataset_fixed.csv')
 suspectsdf = pd.DataFrame(suspects)
 print(suspectsdf.head())
 
