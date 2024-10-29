@@ -8,6 +8,9 @@ crimesdf = pd.DataFrame(crimes)
 suspects = pd.read_csv('rollenderSteppenlaeufer/resources/Suspects_Dataset_fixed.csv')
 suspectsdf = pd.DataFrame(suspects)
 
+
+
+
 crimesdf.columns = crimesdf.columns.str.lower() # lowercase column names
 crimesdf = crimesdf.applymap(lambda s: s.lower() if type(s) == str else s) # lowercase entries
 crimesdf['crime weapon'] = crimesdf['crime weapon'].replace('n/a', np.nan).fillna('unclear') # replace 'n/a' with NaN and fill NaN with 'unclear'
@@ -36,19 +39,27 @@ filtered_crimes = crimesdf[
 ]
 monsters_involved = filtered_crimes['monster involved'].unique()
 suspectsdf = suspectsdf[suspectsdf['monster'].isin(monsters_involved)]
+
+filtered_suspects = suspectsdf[
+    (suspectsdf['allergy'] != 'silver')
+]
+
 # Assuming you want to predict which monster is involved
-X = suspectsdf[['age', 'speed level', 'strength level']]  # Feature columns
-y = suspectsdf['monster']  # Target column
+if filtered_suspects.empty:
+    print("No suspects found for the filtered crimes.")
+else:
+    X = filtered_suspects[['age', 'speed level', 'strength level']]  # Feature columns
+    y = filtered_suspects['monster']  # Target column
+
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+    model = RandomForestClassifier()
+    model.fit(X_train, y_train)
+    predictions = model.predict(X_test)
+
+    predictions = np.array(predictions)
+    unique, counts = np.unique(predictions, return_counts=True)
+    summary = dict(zip(unique, counts))
+    print(summary)
 
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-model = RandomForestClassifier()
-model.fit(X_train, y_train)
-predictions = model.predict(X_test)
 
-
-
-predictions = np.array(predictions)
-unique, counts = np.unique(predictions, return_counts=True)
-summary = dict(zip(unique, counts))
-print(summary)
